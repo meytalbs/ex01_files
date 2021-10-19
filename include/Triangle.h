@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Vertex.h"  // ask - where do we need to put the includes
-#include "Rectangle.h"
 #include "Board.h"
 
 class Triangle

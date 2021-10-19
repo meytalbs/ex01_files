@@ -1,4 +1,5 @@
 #include "Square.h"
+#include "Rectangle.h"
 
 
 Square::Square(const Vertex& bottomLeft, const Vertex& topRight)

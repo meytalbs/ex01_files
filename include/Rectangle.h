@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Vertex.h"
-
 class Rectangle 
 {
 public:

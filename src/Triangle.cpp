@@ -1,5 +1,7 @@
 #include "Triangle.h"
+#include "Rectangle.h"
 
+/*
 Triangle::Triangle(const Vertex vertices[3]) 
 	: m_v0(vertices[0]), m_v1(vertices[1]), m_v2(vertices[2])
 {
@@ -68,3 +70,4 @@ bool Triangle::scale(double factor)
 {
 
 }
+*/
