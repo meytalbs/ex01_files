@@ -1,5 +1,6 @@
 #pragma once
 
+/*
 #include "Vertex.h"  // ask - where do we need to put the includes
 #include "Board.h"
 
@@ -25,3 +26,4 @@ private:
 	Vertex m_v1;
 	Vertex m_v2;
 };
+*/

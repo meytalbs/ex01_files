@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Board.h"
+#include "Vertex.h"
+
 class Rectangle 
 {
 public:
