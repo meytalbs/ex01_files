@@ -7,7 +7,7 @@ Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
 {}
 
 Square::Square(const Vertex& start, double length)
-    : Square(start, Vertex(start.m_col + m_length, start.m_row + m_length))
+    : Square(start, Vertex(start.m_col + length, start.m_row + length))
 {}
 
 //-----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ double Square::getPerimeter() const
 //-----------------------------------------------------------------------------
 Vertex Square::getCenter() const
 {
-    return Vertex(m_bottomLeft.m_col + m_length / 2, m_bottomLeft.m_row + m_length / 2)
+    return Vertex(m_bottomLeft.m_col + m_length / 2, m_bottomLeft.m_row + m_length / 2);
 }
 
 //-----------------------------------------------------------------------------
