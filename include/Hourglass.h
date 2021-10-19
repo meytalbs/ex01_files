@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Triangle.h"
 #include "Vertex.h"
 
 class Hourglass
@@ -16,8 +17,9 @@ public:
 	double getArea() const;
 	double getPerimeter() const;
 	Vertex getCenter() const;
-	bool scale(double factor)
+	bool scale(double factor);
 
 private:
-
+	Triangle m_upper,
+		m_lower;
 };

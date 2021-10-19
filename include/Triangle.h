@@ -25,6 +25,4 @@ private:
 	Vertex m_v0;
 	Vertex m_v1;
 	Vertex m_v2;
-
-
 };

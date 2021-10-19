@@ -2,6 +2,7 @@
 
 #include "Vertex.h"
 #include "Board.h"
+#include "Rectangle.h"
 
 class Square
 {
@@ -14,11 +15,11 @@ public:
     double getLength() const;
 
     void draw(Board& board) const;
-    Rectangle getBoundingRectangle() const;
+    //Rectangle getBoundingRectangle() const;
     double getArea() const;
     double getPerimeter() const;
     Vertex getCenter() const;
-    bool scale(double factor)
+    bool scale(double factor);
 
 private:
     Vertex m_bottomLeft;
