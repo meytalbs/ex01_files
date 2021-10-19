@@ -1,7 +1,7 @@
 #include "Square.h"
 class Rectangle
 
-    Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
+Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
     :m_bottomLeft(bottomLeft), m_topRight(topRight)
 {}
 
@@ -64,4 +64,29 @@ Vertex Square::getCenter() const
 }
 
 //-----------------------------------------------------------------------------
+//fix this function is not good
 bool Square::scale(double factor)
+{
+    if (factor < 0)
+        return false;
+
+    Vertex center = getCenter();
+
+    double new_x = center.m_col - (factor * (center.m_col - m_bottomLeft.m_col)),
+            new_y = center.m_row - (factor * (center.m_row - m_bottomLeft.m_row));
+
+    Vertex new_bottomLeft = Vertex(new_x, new_y);
+
+    new_x = center.m_col - (factor * (center.m_col - m_topRight.m_col));
+    new_y = center.m_row - (factor * (center.m_row - m_topRight.m_row));
+
+    Vertex new_topRight = Vertex(new_x, new_y);
+
+    if (!new_bottomLeft.isValid() || !new_topRight.isValid())
+        return false;
+    
+    m_bottomLeft = new_bottomLeft;
+    m_topRight = new_topRight;
+
+    return true;
+}

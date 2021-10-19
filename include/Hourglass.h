@@ -16,7 +16,7 @@ public:
 	double getArea() const;
 	double getPerimeter() const;
 	Vertex getCenter() const;
-	bool scale(double factor)
+	bool scale(double factor);
 
 private:
 
