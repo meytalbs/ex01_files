@@ -1,6 +1,14 @@
 #include "Rectangle.h"
 #include "Board.h"
 
+Rectangle::Rectangle(const Vertex& bottomLeft, const Vertex& topRight)
+	: m_bottomLeft(bottomLeft), m_topRight(topRight)
+{}
+
+Rectangle::Rectangle(const Vertex vertices[2])
+	: m_bottomLeft(vertices[0]), m_topRight(vertices[1])
+{}
+
 // this function returns the bottom-left vertex of rectangle
 Vertex Rectangle::getBottomLeft() const
 {
@@ -16,14 +24,8 @@ Vertex Rectangle::getTopRight() const
 //-----------------------------------------------------------------------------
 
 // this function returns rectangle width
-double Rectangle::getWidth() const   // ask which way is better
+double Rectangle::getWidth() const
 {
-	/*
-	double x1, x2;
-
-	x1 = m_bottomLeft.m_col;
-	x2 = m_topRight.m_col;
-	*/
 	return m_topRight.m_col - m_bottomLeft.m_col;
 }
 //-----------------------------------------------------------------------------
@@ -35,53 +37,50 @@ double Rectangle::getHeight() const
 }
 //-----------------------------------------------------------------------------
 
-// this function returns rectangle center vertex
-Vertex Rectangle::getCenter() const
-{
-	return getVertex(m_bottomLeft, getWidth() / 2, getHeight() / 2); 
-}
-//-----------------------------------------------------------------------------
-
 // this function draw the rectangle in board
 void Rectangle::draw(Board& board) const
 {
-	Vertex topLeft = getVertex(m_bottomLeft, 0, getHeight()),
-		   bottomRight = getVertex(m_bottomLeft, getWidth(), 0);
+	Vertex topLeft = Vertex(m_bottomLeft_m_col, m_bottomLeft_m_row + getHeight()),
+		   bottomRight = Vertex(m_bottomLeft_m_col + getWidth(), m_bottomLeft_m_row);
 
-	drawLine(m_bottomLeft, topLeft);
-	drawLine(m_bottomLeft, bottomRight);
-	drawLine(m_topRight, topLeft);
-	drawLine(m_topRight, bottomRight);
+	board.drawLine(m_bottomLeft, topLeft);
+	board.drawLine(m_bottomLeft, bottomRight);
+	board.drawLine(m_topRight, topLeft);
+	board.drawLine(m_topRight, bottomRight);
+}
+//-----------------------------------------------------------------------------
+
+// this function draw the rectangle that blocks the original rectangle
+Rectangle Rectangle::getBoundingRectangle() const
+{
+	return Rectangle(m_bottomLeft, m_topRight);
+}
+//-----------------------------------------------------------------------------
+
+// this function returns rectangle area
+double Rectangle::getArea() const
+{
+	return (getHeight() * getWidth());
+}
+//-----------------------------------------------------------------------------
+
+// this function returns rectangle perimeter
+double Rectangle::getPerimeter() const
+{
+	return ((2 * getHeight()) + (2 * getWidth()));
+}
+//-----------------------------------------------------------------------------
+
+// this function returns rectangle center vertex
+Vertex Rectangle::getCenter() const
+{
+	return Vertex(m_bottomLeft.m_col + getWidth() / 2, m_bottomLeft.m_row + getHeight() / 2);
 }
 //-----------------------------------------------------------------------------
 
 // Documentation
-Rectangle getBoundingRectangle() const;
-//-----------------------------------------------------------------------------
-
-// Documentation
-double getArea() const;
-//-----------------------------------------------------------------------------
-
-// Documentation
-double getPerimeter() const;
-//-----------------------------------------------------------------------------
-
-// Documentation
-bool scale(double factor)
-//-----------------------------------------------------------------------------
-
-
-
-// this function get vertex length in x and length in y to add to vertex
-// and returns the result
-Vertex Rectangle::getVertex(Vertex v, double x_val, double y_val) // ask about func location (which file)
+bool Rectangle::scale(double factor)
 {
-	Vertex temp;	// for temp vertex
 
-	temp.m_col = v.m_col + x_val;
-	temp.m_row = v.m_row + y_val;
-
-	return temp;
 }
 //-----------------------------------------------------------------------------
