@@ -15,7 +15,7 @@ public:
     double getLength() const;
 
     void draw(Board& board) const;
-    //Rectangle getBoundingRectangle() const;
+    Rectangle getBoundingRectangle() const;
     double getArea() const;
     double getPerimeter() const;
     Vertex getCenter() const;

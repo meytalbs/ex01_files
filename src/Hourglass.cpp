@@ -1,5 +1,6 @@
 #include "Hourglass.h"
 
+/*
 //-----------------------------------------------------------------------------
 Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
 {
@@ -59,3 +60,4 @@ bool Hourglass::scale(double factor)
 {
 
 }
+*/

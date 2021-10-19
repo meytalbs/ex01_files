@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Vertex.h"  // ask - where do we need to put the includes
-#include "Rectangle.h"
 #include "Board.h"
 
 class Triangle
@@ -19,7 +18,7 @@ public:
 	double getArea() const;
 	double getPerimeter() const;
 	Vertex getCenter() const;
-	bool scale(double factor)
+	bool scale(double factor);
 
 private:
 	Vertex m_v0;

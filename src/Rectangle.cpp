@@ -1,18 +1,21 @@
+#pragma once
+
 #include "Rectangle.h"
 #include "Board.h"
+#include "Vertex.h"
 
 const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20,10),
 			 DEFAULT_TOP_RIGHT = Vertex(20,30);
 
 Rectangle::Rectangle(const Vertex& bottomLeft, const Vertex& topRight)
-	: m_bottomLeft(DEFAULT_BOTTOM_LEFT), m_topRight(DEFAULT_TOP_RIGHT)
+	//: m_bottomLeft(DEFAULT_BOTTOM_LEFT), m_topRight(DEFAULT_TOP_RIGHT)
 {
 	m_bottomLeft = bottomLeft;
 	m_topRight = topRight;
 }
 
 Rectangle::Rectangle(const Vertex vertices[2])
-	: m_bottomLeft(DEFAULT_BOTTOM_LEFT), m_topRight(DEFAULT_TOP_RIGHT)
+	//: m_bottomLeft(DEFAULT_BOTTOM_LEFT), m_topRight(DEFAULT_TOP_RIGHT)
 {
 	m_bottomLeft = vertices[0];
 	m_topRight = vertices[1];
