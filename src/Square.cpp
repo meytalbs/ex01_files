@@ -1,5 +1,6 @@
 #include "Square.h"
 
+
 Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
     :m_bottomLeft(bottomLeft), m_topRight(topRight)
 {}
@@ -41,7 +42,7 @@ void Square::draw(Board& board) const
 //-----------------------------------------------------------------------------
 Rectangle Square::getBoundingRectangle() const
 {
-    return (Rectangle(m_bottomLeft, m_topRight));
+    return Rectangle(m_bottomLeft, m_topRight);
 }
 
 //-----------------------------------------------------------------------------
