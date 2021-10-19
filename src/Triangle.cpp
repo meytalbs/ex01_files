@@ -2,17 +2,14 @@
 #include "Rectangle.h"
 
 /*
+
 Triangle::Triangle(const Vertex vertices[3]) 
 	: m_v0(vertices[0]), m_v1(vertices[1]), m_v2(vertices[2])
-{
-	validateTriangle();
-};
+{};
 
 Triangle::Triangle(const Vertex& v0, const Vertex& v1, double height)
-	: m_v0(v0), m_v1(v1), m_v2((0,0))
-{
-	validateTriangle();
-};
+	: m_v0(v0), m_v1(v1), m_v2(v1)
+{};
 
 Vertex Triangle::getVertex(int index) const
 {

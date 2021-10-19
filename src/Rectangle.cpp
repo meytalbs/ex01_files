@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Rectangle.h"
-#include "Board.h"
-#include "Vertex.h"
 
 const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20,10),
 			 DEFAULT_TOP_RIGHT = Vertex(20,30);
@@ -63,8 +61,8 @@ double Rectangle::getHeight() const
 // this function draw the rectangle in board
 void Rectangle::draw(Board& board) const
 {
-	Vertex topLeft = Vertex(m_bottomLeft_m_col, m_bottomLeft_m_row + getHeight()),
-		   bottomRight = Vertex(m_bottomLeft_m_col + getWidth(), m_bottomLeft_m_row);
+	Vertex topLeft = Vertex(m_bottomLeft.m_col, m_bottomLeft.m_row + getHeight()),
+		   bottomRight = Vertex(m_bottomLeft.m_col + getWidth(), m_bottomLeft.m_row);
 
 	board.drawLine(m_bottomLeft, topLeft);
 	board.drawLine(m_bottomLeft, bottomRight);
