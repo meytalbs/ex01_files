@@ -1,5 +1,4 @@
 #include "Square.h"
-class Rectangle
 
 Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
     :m_bottomLeft(bottomLeft), m_topRight(topRight)
@@ -64,7 +63,6 @@ Vertex Square::getCenter() const
 }
 
 //-----------------------------------------------------------------------------
-//fix this function is not good
 bool Square::scale(double factor)
 {
     if (factor < 0)

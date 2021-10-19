@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Triangle.h"
 #include "Vertex.h"
 
 class Hourglass
@@ -19,5 +20,6 @@ public:
 	bool scale(double factor);
 
 private:
-
+	Triangle m_upper,
+		m_lower;
 };
