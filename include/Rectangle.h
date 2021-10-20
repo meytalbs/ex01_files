@@ -8,10 +8,9 @@ class Rectangle
 public:
 	Rectangle(const Vertex& bottomLeft, const Vertex& topRight);
 	Rectangle(const Vertex vertices[2]);
-	/*
 	Rectangle(double x0, double y0, double x1, double y1);
 	Rectangle(const Vertex& start, double width, double height);
-	*/
+
 	Vertex getBottomLeft() const;
 	Vertex getTopRight() const;
 	double getWidth() const;
@@ -27,4 +26,6 @@ public:
 private:
 	Vertex m_bottomLeft;
 	Vertex m_topRight;
+	bool isRectangleValid(const Vertex& v1, const Vertex& v2);
+	void buildDefault();
 };

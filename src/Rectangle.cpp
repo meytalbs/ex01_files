@@ -6,58 +6,74 @@ const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20,10),
 			 DEFAULT_TOP_RIGHT = Vertex(20,30);
 
 Rectangle::Rectangle(const Vertex& bottomLeft, const Vertex& topRight)
-	//: m_bottomLeft(DEFAULT_BOTTOM_LEFT), m_topRight(DEFAULT_TOP_RIGHT)
+	:m_bottomLeft(bottomLeft), m_topRight(topRight)
 {
-	m_bottomLeft = bottomLeft;
-	m_topRight = topRight;
+	if (isRectangleValid(bottomLeft, topRight))
+	{
+		m_bottomLeft = bottomLeft;
+		m_topRight = topRight;
+	}
+	else
+		buildDefault();
 }
 
+//-----------------------------------------------------------------------------
 Rectangle::Rectangle(const Vertex vertices[2])
-	//: m_bottomLeft(DEFAULT_BOTTOM_LEFT), m_topRight(DEFAULT_TOP_RIGHT)
+	:Rectangle(vertices[0], vertices[1])
+{}
+
+//-----------------------------------------------------------------------------
+Rectangle::Rectangle(double x0, double y0, double x1, double y1)
+	:Rectangle(Vertex(x0, y0), Vertex(x1, y1))
+{}
+
+//-----------------------------------------------------------------------------
+Rectangle::Rectangle(const Vertex& start, double width, double height)
+	:Rectangle(start, Vertex(start.m_col + width, start.m_row + height))
+{}
+
+//-----------------------------------------------------------------------------
+bool Rectangle::isRectangleValid(const Vertex& v1, const Vertex& v2)
 {
-	m_bottomLeft = vertices[0];
-	m_topRight = vertices[1];
+	return (v1.isValid() && v2.isValid() && v2.isToTheRightOf(v1) && v2.isHigherThan(v1));
 }
 
-/*
-Rectangle(double x0, double y0, double x1, double y1)
+//-----------------------------------------------------------------------------
+void Rectangle::buildDefault()
 {
-
+	m_bottomLeft = Vertex(20, 10);
+	m_topRight = Vertex(30, 20);
 }
 
-Rectangle(const Vertex& start, double width, double height)
-{
-
-}
-*/
+//-----------------------------------------------------------------------------
 // this function returns the bottom-left vertex of rectangle
 Vertex Rectangle::getBottomLeft() const
 {
 	return m_bottomLeft;
 }
-//-----------------------------------------------------------------------------
 
+//------------------- ----------------------------------------------------------
 // this function returns the top-right vertex of rectangle
 Vertex Rectangle::getTopRight() const
 {
 	return m_topRight;
 }
-//-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
 // this function returns rectangle width
 double Rectangle::getWidth() const
 {
 	return m_topRight.m_col - m_bottomLeft.m_col;
 }
-//-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
 // this function returns rectangle height
 double Rectangle::getHeight() const
 {
 	return m_topRight.m_row - m_bottomLeft.m_row;
 }
-//-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
 // this function draw the rectangle in board
 void Rectangle::draw(Board& board) const
 {
@@ -69,36 +85,36 @@ void Rectangle::draw(Board& board) const
 	board.drawLine(m_topRight, topLeft);
 	board.drawLine(m_topRight, bottomRight);
 }
-//-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
 // this function draw the rectangle that blocks the original rectangle
 Rectangle Rectangle::getBoundingRectangle() const
 {
 	return Rectangle(m_bottomLeft, m_topRight);
 }
-//-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
 // this function returns rectangle area
 double Rectangle::getArea() const
 {
 	return (getHeight() * getWidth());
 }
-//-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
 // this function returns rectangle perimeter
 double Rectangle::getPerimeter() const
 {
 	return ((2 * getHeight()) + (2 * getWidth()));
 }
-//-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
 // this function returns rectangle center vertex
 Vertex Rectangle::getCenter() const
 {
 	return Vertex(m_bottomLeft.m_col + getWidth() / 2, m_bottomLeft.m_row + getHeight() / 2);
 }
-//-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
 // Documentation
 bool Rectangle::scale(double factor)
 {
@@ -118,4 +134,3 @@ bool Rectangle::scale(double factor)
 
 	return true;
 }
-//-----------------------------------------------------------------------------
