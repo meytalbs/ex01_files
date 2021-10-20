@@ -1,12 +1,39 @@
+#include <cmath>
 #include "Triangle.h"
 
-Triangle::Triangle(const Vertex vertices[3]) 
-	: m_v0(vertices[0]), m_v1(vertices[1]), m_v2(vertices[2])
-{};
+const Vertex DEFAULT_V0 = Vertex(20, 20),
+			 DEFAULT_V1 = Vertex(30, 20),
+		     DEFAULT_V2 = Vertex(25, 20 + sqrt(75));
 
 Triangle::Triangle(const Vertex& v0, const Vertex& v1, double height)
-	: m_v0(v0), m_v1(v1), m_v2(v1)
+	: m_v0(v0), m_v1(v1), m_v2(Vertex(v1.m_col, v1.m_row + height))
+{
+	if (!isTriangleValid())
+	{
+		m_v0 = DEFAULT_V0;
+		m_v1 = DEFAULT_V1;
+		m_v2 = DEFAULT_V2;
+	}
+};
+
+Triangle::Triangle(const Vertex vertices[3]) 
+	: Triangle(vertices[0], vertices[1], vertices[2].m_row - vertices[0].m_row)
 {};
+
+bool Triangle::isTriangleValid()
+{
+	return (m_v0.isValid() && m_v1.isValid() && m_v2.isValid() 
+			&& m_v2.isToTheRightOf(m_v0) && m_v1.isToTheRightOf(m_v2)
+			&& !m_v0.isHigherThan(m_v1)
+			&& distance(m_v0, m_v2) - getLength() < 0.5 
+		    && distance(m_v2, m_v1) - getLength() < 0.5);
+}
+
+double Triangle::distance(const Vertex& v0, const Vertex& v1) // todo 
+{
+	return sqrt(((v1.m_col - v0.m_col) * (v1.m_col - v0.m_col)) +
+		((v1.m_row - v0.m_row) * (v1.m_row - v0.m_row)));
+}
 
 Vertex Triangle::getVertex(int index) const
 {

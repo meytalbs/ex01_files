@@ -25,4 +25,6 @@ private:
 	Vertex m_v0;
 	Vertex m_v1;
 	Vertex m_v2;
+	bool isTriangleValid();
+	double distance(const Vertex& v0, const Vertex& v1);
 };
