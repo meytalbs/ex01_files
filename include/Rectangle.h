@@ -27,5 +27,4 @@ private:
 	Vertex m_bottomLeft;
 	Vertex m_topRight;
 	bool isRectangleValid(const Vertex& v1, const Vertex& v2);
-	void buildDefault();
 };

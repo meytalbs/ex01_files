@@ -1,14 +1,29 @@
 #include "Square.h"
 #include "Rectangle.h"
 
+const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20, 10),
+            DEFAULT_TOP_RIGHT = Vertex(20, 30);
 
 Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
     :m_bottomLeft(bottomLeft), m_topRight(topRight)
-{}
+{
+    if (!squareIsValid(bottomLeft, topRight))
+    {
+        m_bottomLeft = DEFAULT_BOTTOM_LEFT;
+        m_topRight = DEFAULT_TOP_RIGHT;
+    }
+}
+
 
 Square::Square(const Vertex& start, double length)
     : Square(start, Vertex(start.m_col + length, start.m_row + length))
 {}
+
+//-----------------------------------------------------------------------------
+bool Square::squareIsValid(const Vertex& v1, const Vertex& v2)
+{
+    return (v1.isValid() && v2.isValid() && v2.isToTheRightOf(v1) && v2.isHigherThan(v1));
+}
 
 //-----------------------------------------------------------------------------
 Vertex Square::getBottomLeft() const
@@ -25,7 +40,7 @@ Vertex Square::getTopRight() const
 //-----------------------------------------------------------------------------
 double Square::getLength() const
 {
-    return m_length;
+    return m_topRight.m_col - m_bottomLeft.m_col;
 }
 
 //-----------------------------------------------------------------------------
@@ -49,19 +64,19 @@ Rectangle Square::getBoundingRectangle() const
 //-----------------------------------------------------------------------------
 double Square::getArea() const
 {
-    return m_length * m_length;
+    return getLength() * getLength();
 }
 
 //-----------------------------------------------------------------------------
 double Square::getPerimeter() const
 {
-    return m_length * 4;
+    return getLength() * 4;
 }   
 
 //-----------------------------------------------------------------------------
 Vertex Square::getCenter() const
 {
-    return Vertex(m_bottomLeft.m_col + m_length / 2, m_bottomLeft.m_row + m_length / 2);
+    return Vertex(m_bottomLeft.m_col + getLength() / 2, m_bottomLeft.m_row + getLength() / 2);
 }
 
 //-----------------------------------------------------------------------------

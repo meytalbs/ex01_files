@@ -24,5 +24,5 @@ public:
 private:
     Vertex m_bottomLeft;
     Vertex m_topRight;
-    double m_length;
+    bool squareIsValid(const Vertex& v1, const Vertex& v2);
 };

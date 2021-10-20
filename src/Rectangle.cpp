@@ -8,13 +8,11 @@ const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20,10),
 Rectangle::Rectangle(const Vertex& bottomLeft, const Vertex& topRight)
 	:m_bottomLeft(bottomLeft), m_topRight(topRight)
 {
-	if (isRectangleValid(bottomLeft, topRight))
+	if (!isRectangleValid(bottomLeft, topRight))
 	{
-		m_bottomLeft = bottomLeft;
-		m_topRight = topRight;
+		m_bottomLeft = DEFAULT_BOTTOM_LEFT;
+		m_topRight = DEFAULT_TOP_RIGHT;
 	}
-	else
-		buildDefault();
 }
 
 //-----------------------------------------------------------------------------
@@ -36,13 +34,6 @@ Rectangle::Rectangle(const Vertex& start, double width, double height)
 bool Rectangle::isRectangleValid(const Vertex& v1, const Vertex& v2)
 {
 	return (v1.isValid() && v2.isValid() && v2.isToTheRightOf(v1) && v2.isHigherThan(v1));
-}
-
-//-----------------------------------------------------------------------------
-void Rectangle::buildDefault()
-{
-	m_bottomLeft = Vertex(20, 10);
-	m_topRight = Vertex(30, 20);
 }
 
 //-----------------------------------------------------------------------------

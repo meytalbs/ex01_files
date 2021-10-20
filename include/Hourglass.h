@@ -2,7 +2,7 @@
 
 #include "Triangle.h"
 #include "Vertex.h"
-/*
+
 class Hourglass
 {
 public: 
@@ -23,5 +23,3 @@ private:
 	Triangle m_upper,
 		m_lower;
 };
-
-*/
