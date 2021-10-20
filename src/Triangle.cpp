@@ -1,7 +1,4 @@
 #include "Triangle.h"
-#include "Rectangle.h"
-
-/*
 
 Triangle::Triangle(const Vertex vertices[3]) 
 	: m_v0(vertices[0]), m_v1(vertices[1]), m_v2(vertices[2])
@@ -30,7 +27,7 @@ double Triangle::getLength() const
 // this function returns the height of triangle
 double Triangle::getHeight() const
 {
-	return m_v3.m_row - m_v0.m_row;
+	return m_v2.m_row - m_v0.m_row;
 }
 
 // this function draw a triangle in board
@@ -60,11 +57,26 @@ double Triangle::getPerimeter() const
 
 Vertex Triangle::getCenter() const
 {
-	return Vertex(m_v1.m_col - m_v0.m_col, m_v2.row - m_v0.m_row);
+	return Vertex(m_v1.m_col - m_v0.m_col, m_v2.m_row - m_v0.m_row);
 }
 
 bool Triangle::scale(double factor)
 {
+	Vertex center = getCenter();
 
+	double length_x = (center.m_col - m_v0.m_col) * factor,
+		   length_y = (center.m_row - m_v0.m_row) * factor;
+
+	Vertex new_v0 = Vertex(center.m_col - length_x, center.m_row - length_y),
+		   new_v1 = Vertex(center.m_col + length_x, center.m_row - length_y),
+		   new_v2 = Vertex(center.m_col, center.m_row + length_y);
+
+	if (factor < 0 || !new_v0.isValid() || !new_v1.isValid() || !new_v2.isValid())
+		return false;
+
+	m_v0 = new_v0;
+	m_v1 = new_v1;
+	m_v2 = new_v2;
+
+	return true;
 }
-*/
