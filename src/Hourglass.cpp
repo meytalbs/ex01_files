@@ -1,30 +1,33 @@
 #include "Hourglass.h"
 #include "Triangle.h"
 
-const Vertex DEFAULT_UPPER_V0 = Vertex(20, 20),
-			 DEFAULT_UPPER_V1 = Vertex(30, 20),
-			 DEFAULT_UPPER_V2 = Vertex(25, 20 + sqrt(75)),
-			 DEFAULT_LOWER_V0 = Vertex(25, 20 + sqrt(75)),
-			 DEFAULT_LOWER_V1 = Vertex(20, 20 + 2*sqrt(75)),
-			 DEFAULT_LOWER_V2 = Vertex(30, 20 + 2*sqrt(75));
+const Vertex DEFAULT_LOWER_V0 = Vertex(20, 20),
+			 DEFAULT_LOWER_V1 = Vertex(30, 20),
+			 DEFAULT_LOWER_V2 = Vertex(25, 20 + sqrt(75)),
+			 DEFAULT_UPPER_V0 = Vertex(25, 20 + sqrt(75)),
+			 DEFAULT_UPPER_V1 = Vertex(20, 20 + 2*sqrt(75)),
+			 DEFAULT_UPPER_V2 = Vertex(30, 20 + 2*sqrt(75));
 
 //-----------------------------------------------------------------------------
 Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
-	: m_upper(upper), m_lower(lower)
+	: m_lower(Triangle(DEFAULT_LOWER_V0, DEFAULT_LOWER_V1, DEFAULT_LOWER_V2.m_row - DEFAULT_LOWER_V0.m_row)),
+	m_upper(Triangle(DEFAULT_UPPER_V0, DEFAULT_UPPER_V1, DEFAULT_UPPER_V2.m_row - DEFAULT_UPPER_V0.m_row))
 {
-	if (!isHourglassValid())
+	if (isHourglassValid())
 	{
-		m_lower = Triangle(DEFAULT_LOWER_V0, DEFAULT_LOWER_V1, DEFAULT_LOWER_V2.m_row - DEFAULT_LOWER_V0.m_row);
-		m_upper = Triangle(DEFAULT_UPPER_V0, DEFAULT_UPPER_V1, DEFAULT_UPPER_V2.m_row - DEFAULT_UPPER_V0.m_row);
+		m_lower = lower;
+		m_upper = upper;
 	}
 }
 
 //-----------------------------------------------------------------------------
 Hourglass::Hourglass(const Triangle& lower)
-	: m_lower(lower),
-   	m_upper(Triangle(Vertex(lower.getVertex(0).m_col, lower.getVertex(0).m_row + lower.getHeight()),
-		             Vertex(lower.getVertex(1).m_col, lower.getVertex(1).m_row + lower.getHeight()),
-		             lower.getHeight()))
+	: m_lower(Triangle(DEFAULT_LOWER_V0, DEFAULT_LOWER_V1, DEFAULT_LOWER_V2.m_row - DEFAULT_LOWER_V0.m_row)),
+	m_upper(Triangle(DEFAULT_UPPER_V0, DEFAULT_UPPER_V1, -(DEFAULT_UPPER_V2.m_row - DEFAULT_UPPER_V0.m_row)))
+	//: m_lower(lower),
+   	//m_upper(Triangle(Vertex(lower.getVertex(0).m_col, lower.getVertex(0).m_row + 2*lower.getHeight()),
+		//             Vertex(lower.getVertex(1).m_col, lower.getVertex(1).m_row + 2*lower.getHeight()),
+		  //           lower.getHeight()))
 {
 	/*
 	double new_v_row = lower.getVertex(0).m_row + lower.getHeight() * 2;
@@ -35,7 +38,14 @@ Hourglass::Hourglass(const Triangle& lower)
 	
 	m_upper = Triangle(vertics);
 	*/
-	Hourglass(m_upper, lower);
+
+	if (isHourglassValid())
+	{
+		m_lower = lower;
+		m_upper = Triangle(Vertex(lower.getVertex(0).m_col, lower.getVertex(0).m_row + 2 * lower.getHeight()),
+			Vertex(lower.getVertex(1).m_col, lower.getVertex(1).m_row + 2 * lower.getHeight()),
+			lower.getHeight());
+	}
 }
 
 bool Hourglass::isHourglassValid()
@@ -61,15 +71,22 @@ double Hourglass::getHeight() const
 //-----------------------------------------------------------------------------
 void Hourglass::draw(Board& board) const
 {
+	Vertex v0 = m_upper.getVertex(0);
+	Vertex v1 = m_upper.getVertex(1);
+	Vertex v2 = m_upper.getVertex(2);
+
+	board.drawLine(v0, v1);
+	board.drawLine(v0, v2);
+	board.drawLine(v1, v2);
+	//m_upper.draw(board);
 	m_lower.draw(board);
-	m_upper.draw(board);
 }
 
 //-----------------------------------------------------------------------------
 //the 2nd vertex may be 1 cause its upside down
 Rectangle Hourglass::getBoundingRectangle() const
 {
-	return Rectangle(m_lower.getVertex(0), m_upper.getVertex(2));
+	return Rectangle(m_lower.getVertex(0), m_upper.getVertex(1));
 }
 
 //-----------------------------------------------------------------------------

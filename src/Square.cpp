@@ -53,7 +53,7 @@ void Square::draw(Board& board) const
 {
     //creates top left and bottom right vertexs
     Vertex topLeft = Vertex(m_bottomLeft.m_col, m_topRight.m_row),
-        bottomRight = Vertex(m_bottomLeft.m_row, m_topRight.m_col);
+           bottomRight = Vertex(m_topRight.m_col, m_bottomLeft.m_row);
 
     board.drawLine(m_bottomLeft, bottomRight);
     board.drawLine(m_bottomLeft, topLeft);

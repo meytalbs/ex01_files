@@ -26,5 +26,4 @@ private:
 	Vertex m_v1;
 	Vertex m_v2;
 	bool isTriangleValid();											//checks if triangle is valid
-	double distance(const Vertex& v0, const Vertex& v1);			//gets distance from 2 vertexs
 };
