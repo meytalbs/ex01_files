@@ -57,10 +57,9 @@ double Triangle::getLength() const
 // this function returns the height of triangle
 double Triangle::getHeight() const // tosdo
 {
-	//double height = m_v2.m_row - m_v0.m_row;
+	double height = m_v2.m_row - m_v0.m_row;
 
-	//return (height ? height > 0 : -height);
-	return m_v2.m_row - m_v0.m_row;
+	return (height > 0 ? height : - height);
 }
 
 //-----------------------------------------------------------------------------
@@ -100,7 +99,7 @@ Vertex Triangle::getCenter() const
 }
 
 //-----------------------------------------------------------------------------
-bool Triangle::scale(double factor)// to do!!!!
+bool Triangle::scale(double factor)
 {
 	Vertex center = getCenter();
 
