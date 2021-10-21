@@ -7,8 +7,8 @@
 class Square
 {
 public:
-    Square(const Vertex& bottomLeft, const Vertex& topRight);
-    Square(const Vertex& start, double length);
+    Square(const Vertex& bottomLeft, const Vertex& topRight);   //c-tor with 2 vertexs
+    Square(const Vertex& start, double length);                 //c-tor with vertex and length
 
     Vertex getBottomLeft() const;
     Vertex getTopRight() const;

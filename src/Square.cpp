@@ -4,9 +4,12 @@
 const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20, 10),
             DEFAULT_TOP_RIGHT = Vertex(20, 30);
 
+//-----------------------------------------------------------------------------
+//c-tor builds square using two vertexs
 Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
     :m_bottomLeft(bottomLeft), m_topRight(topRight)
 {
+    //is square isnt valid assign default values
     if (!squareIsValid(bottomLeft, topRight))
     {
         m_bottomLeft = DEFAULT_BOTTOM_LEFT;
@@ -14,7 +17,8 @@ Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
     }
 }
 
-
+//-----------------------------------------------------------------------------
+//uses 2 vertexs c-tor
 Square::Square(const Vertex& start, double length)
     : Square(start, Vertex(start.m_col + length, start.m_row + length))
 {}
@@ -44,8 +48,10 @@ double Square::getLength() const
 }
 
 //-----------------------------------------------------------------------------
+//draws square in board
 void Square::draw(Board& board) const
 {
+    //creates top left and bottom right vertexs
     Vertex topLeft = Vertex(m_bottomLeft.m_col, m_topRight.m_row),
         bottomRight = Vertex(m_bottomLeft.m_row, m_topRight.m_col);
 
@@ -80,6 +86,7 @@ Vertex Square::getCenter() const
 }
 
 //-----------------------------------------------------------------------------
+//scales square from center by factor
 bool Square::scale(double factor)
 {
     if (factor < 0)
@@ -87,17 +94,19 @@ bool Square::scale(double factor)
 
     Vertex center = getCenter();
 
+    //x + y values for bottom left vertex
     double new_x = center.m_col - (factor * (center.m_col - m_bottomLeft.m_col)),
             new_y = center.m_row - (factor * (center.m_row - m_bottomLeft.m_row));
 
     Vertex new_bottomLeft = Vertex(new_x, new_y);
 
+    //x + y values for top right vertex
     new_x = center.m_col - (factor * (center.m_col - m_topRight.m_col));
     new_y = center.m_row - (factor * (center.m_row - m_topRight.m_row));
 
     Vertex new_topRight = Vertex(new_x, new_y);
 
-    if (!new_bottomLeft.isValid() || !new_topRight.isValid())
+    if (!new_bottomLeft.isValid() || !new_topRight.isValid())   //if new vertexs arent valid
         return false;
     
     m_bottomLeft = new_bottomLeft;
