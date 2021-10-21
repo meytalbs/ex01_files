@@ -9,7 +9,7 @@ const Vertex DEFAULT_V0 = Vertex(20, 20),			//default triangle vertexs
 //-----------------------------------------------------------------------------
 //c-tor from 2 vertexs and height
 Triangle::Triangle(const Vertex& v0, const Vertex& v1, double height)
-	: m_v0(v0), m_v1(v1), m_v2(Vertex(v1.m_col/2, v1.m_row + height))
+	: m_v0(v0), m_v1(v1), m_v2(Vertex(v0.m_col + (v1.m_col - v0.m_col)/2, v0.m_row + height))
 {
 	if (!isTriangleValid()) //if triangle isnt valid assign default values
 	{
@@ -30,7 +30,7 @@ bool Triangle::isTriangleValid()
 {
 	return (m_v0.isValid() && m_v1.isValid() && m_v2.isValid() 
 			&& m_v2.isToTheRightOf(m_v0) && m_v1.isToTheRightOf(m_v2)
-			//&& !m_v0.isHigherThan(m_v1)
+			&& !m_v0.isHigherThan(m_v1)
 			&& distance(m_v0, m_v2) - getLength() < 0.5
 		    && distance(m_v2, m_v1) - getLength() < 0.5);
 }
@@ -74,9 +74,10 @@ void Triangle::draw(Board& board) const
 //-----------------------------------------------------------------------------
 Rectangle Triangle::getBoundingRectangle() const
 {
-	Vertex topRight = Vertex(m_v1.m_col, m_v1.m_row + getHeight());
-
-	return Rectangle(m_v0, topRight);
+	if (m_v2.isHigherThan(m_v0))
+		return Rectangle(m_v0, Vertex(m_v1.m_col, m_v2.m_row));
+	
+	return Rectangle(Vertex(m_v0.m_col, m_v2.m_row), m_v1);
 }
 
 //-----------------------------------------------------------------------------
@@ -98,9 +99,20 @@ Vertex Triangle::getCenter() const
 }
 
 //-----------------------------------------------------------------------------
-bool Triangle::scale(double factor)
+bool Triangle::scale(double factor)// to do!!!!
 {
 	Vertex center = getCenter();
+
+
+
+
+
+
+
+
+
+
+
 
 	double length_x = (center.m_col - m_v0.m_col) * factor,
 		   length_y = (center.m_row - m_v0.m_row) * factor;
