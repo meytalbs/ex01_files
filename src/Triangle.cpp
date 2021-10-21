@@ -55,11 +55,12 @@ double Triangle::getLength() const
 
 //-----------------------------------------------------------------------------
 // this function returns the height of triangle
-double Triangle::getHeight() const
+double Triangle::getHeight() const // tosdo
 {
-	double height = m_v2.m_row - m_v0.m_row;
+	//double height = m_v2.m_row - m_v0.m_row;
 
-	return (height ? height > 0 : -height);
+	//return (height ? height > 0 : -height);
+	return m_v2.m_row - m_v0.m_row;
 }
 
 //-----------------------------------------------------------------------------
@@ -83,7 +84,7 @@ Rectangle Triangle::getBoundingRectangle() const
 //-----------------------------------------------------------------------------
 double Triangle::getArea() const
 {
-	return (getHeight() * getLength() / 2);
+	return ((getHeight() * getLength()) / 2);
 }
 
 //-----------------------------------------------------------------------------
@@ -95,7 +96,7 @@ double Triangle::getPerimeter() const
 //-----------------------------------------------------------------------------
 Vertex Triangle::getCenter() const
 {
-	return Vertex(m_v0.m_col + getLength()/2, m_v0.m_row + getHeight()/3);
+	return Vertex(m_v0.m_col + getLength()/2, m_v0.m_row + (getHeight()/3));
 }
 
 //-----------------------------------------------------------------------------
@@ -103,33 +104,17 @@ bool Triangle::scale(double factor)// to do!!!!
 {
 	Vertex center = getCenter();
 
-
-
-
-
-
-
-
-
-
-
-
-	double length_x = (center.m_col - m_v0.m_col) * factor,
-		   length_y = (center.m_row - m_v0.m_row) * factor;
-
-	Vertex new_v0 = Vertex(center.m_col - length_x, center.m_row - length_y),
-		   new_v1 = Vertex(center.m_col + length_x, center.m_row - length_y),
-		   new_v2 = Vertex(center.m_col, center.m_row + length_y);
+	Vertex 
+		new_v0 = Vertex(center.m_col - (center.m_col - m_v0.m_col)*factor, center.m_row - (center.m_row - m_v0.m_row)*factor),
+		new_v1 = Vertex(center.m_col + (m_v1.m_col - center.m_col)*factor, center.m_row - (center.m_row - m_v1.m_row)*factor),
+		new_v2 = Vertex(center.m_col, center.m_row + distance(m_v2, center)*factor);
 
 	if (factor < 0 || !new_v0.isValid() || !new_v1.isValid() || !new_v2.isValid())
 		return false;	
 	
-
 	m_v0 = new_v0;
 	m_v1 = new_v1;
 	m_v2 = new_v2;
 
 	return true;
-	
-	
 }
