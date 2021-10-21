@@ -21,5 +21,6 @@ public:
 
 private:
 	Triangle m_upper,
-		m_lower;
+		     m_lower;
+	bool isHourglassValid();
 };
