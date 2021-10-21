@@ -10,10 +10,13 @@ Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
 //-----------------------------------------------------------------------------
 Hourglass::Hourglass(const Triangle& lower)
 {
-	/*
-	Vertex point = lower.getVertex(2);
-	Triangle(point, point.m_row + lower.getHeight());
-	*/
+	double new_v_row = lower.getVertex(0).m_row + lower.getHeight() * 2;
+	Vertex point = lower.getVertex(2),
+		topLeft = Vertex(lower.getVertex(0).m_col, new_v_row),
+		topRight = Vertex(lower.getVertex(1).m_col , new_v_row);
+
+	Vertex vertics[] = {topLeft, topRight, point};
+	Triangle(vertics);
 }
 
 //-----------------------------------------------------------------------------
