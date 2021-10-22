@@ -22,5 +22,5 @@ public:
 private:
 	Triangle m_upper,
 		     m_lower;
-	bool isHourglassValid();
+	bool isHourglassValid(Triangle lower, Triangle upper);
 };
