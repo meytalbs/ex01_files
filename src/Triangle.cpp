@@ -74,10 +74,8 @@ void Triangle::draw(Board& board) const
 //-----------------------------------------------------------------------------
 Rectangle Triangle::getBoundingRectangle() const
 {
-	if (m_v2.isHigherThan(m_v0))
-		return Rectangle(m_v0, Vertex(m_v1.m_col, m_v2.m_row));
 	
-	return Rectangle(Vertex(m_v0.m_col, m_v2.m_row), m_v1);
+	return Rectangle(m_v0, Vertex(m_v1.m_col, m_v2.m_row));
 }
 
 //-----------------------------------------------------------------------------

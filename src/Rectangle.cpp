@@ -2,8 +2,8 @@
 
 #include "Rectangle.h"
 
-const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20,10),	//default vertexs
-			 DEFAULT_TOP_RIGHT = Vertex(20,30);
+const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20, 10),	//default vertexs
+			 DEFAULT_TOP_RIGHT = Vertex(30, 20);
 
 //-----------------------------------------------------------------------------
 Rectangle::Rectangle(const Vertex& bottomLeft, const Vertex& topRight)

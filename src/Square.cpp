@@ -2,7 +2,7 @@
 #include "Rectangle.h"
 
 const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20, 10),
-            DEFAULT_TOP_RIGHT = Vertex(20, 30);
+            DEFAULT_TOP_RIGHT = Vertex(30, 20);
 
 //-----------------------------------------------------------------------------
 //c-tor builds square using two vertexs
