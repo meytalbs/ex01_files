@@ -3,11 +3,11 @@
 #include <iostream>
 
 const Vertex DEFAULT_LOWER_V0 = Vertex(20, 20),
-			 DEFAULT_LOWER_V1 = Vertex(30, 20),
-			 DEFAULT_LOWER_V2 = Vertex(25, 20 + sqrt(75)),
-			 DEFAULT_UPPER_V0 = Vertex(25, 20 + sqrt(75)),
-			 DEFAULT_UPPER_V1 = Vertex(20, 20 + 2*sqrt(75)),
-			 DEFAULT_UPPER_V2 = Vertex(30, 20 + 2*sqrt(75));
+			DEFAULT_LOWER_V1 = Vertex(30, 20),
+			DEFAULT_LOWER_V2 = Vertex(25, 20 + sqrt(75)),
+			DEFAULT_UPPER_V0 = Vertex(25, 20 + sqrt(75)),
+			DEFAULT_UPPER_V1 = Vertex(20, 20 + 2 * sqrt(75)),
+			DEFAULT_UPPER_V2 = Vertex(30, 20 + 2 * sqrt(75));
 
 //-----------------------------------------------------------------------------
 Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
@@ -100,22 +100,21 @@ Vertex Hourglass::getCenter() const
 //-----------------------------------------------------------------------------
 bool Hourglass::scale(double factor)
 {
-	Vertex centerLower = m_lower.getCenter(),
-			centerUpper = m_upper.getCenter();
+	Vertex center = getCenter();
 
-	double lengthX = (centerLower.m_col - m_lower.getVertex(0).m_col) * factor,
-		   lengthY = (centerLower.m_row - m_lower.getVertex(0).m_row) * factor;
-	
-	Vertex lowerV0 = Vertex(centerLower.m_col - lengthX, centerLower.m_row - lengthY),
-		   lowerV1 = Vertex(centerLower.m_col + lengthX, centerLower.m_row - lengthY),
-		   upperV0 = Vertex(centerUpper.m_col - lengthX, centerUpper.m_row + lengthY), 
-		   upperV1 = Vertex(centerUpper.m_col + lengthX, centerUpper.m_row + lengthY);
+	double lengthX = (center.m_col - m_lower.getVertex(0).m_col) * factor,
+		lengthY = (center.m_row - m_lower.getVertex(0).m_row) * factor;
+
+	Vertex lowerV0 = Vertex(center.m_col - lengthX, center.m_row - lengthY),
+		lowerV1 = Vertex(center.m_col + lengthX, center.m_row - lengthY),
+		upperV0 = Vertex(center.m_col - lengthX, center.m_row + lengthY),
+		upperV1 = Vertex(center.m_col + lengthX, center.m_row + lengthY);
 
 	if (factor < 0 || !lowerV0.isValid() || !lowerV1.isValid() || !upperV0.isValid() || !upperV1.isValid())
 		return false;
-	
-	m_lower = Triangle(lowerV0, lowerV1, m_upper.getHeight() + lengthY);
-	m_upper = Triangle(upperV0, upperV1, m_upper.getHeight() + lengthY);
+
+	m_lower = Triangle(lowerV0, lowerV1, center.m_row - lowerV0.m_row);
+	m_upper = Triangle(upperV0, upperV1, center.m_row - lowerV0.m_row);
 
 	return true;
 }
