@@ -9,7 +9,7 @@ const Vertex DEFAULT_V0 = Vertex(20, 20),			//default triangle vertexs
 //-----------------------------------------------------------------------------
 //c-tor from 2 vertexs and height
 Triangle::Triangle(const Vertex& v0, const Vertex& v1, double height)
-	: m_v0(v0), m_v1(v1), m_v2(Vertex(v0.m_col + (v1.m_col - v0.m_col)/2, v0.m_row + height))
+	: m_v0(v0), m_v1(v1), m_v2(Vertex((v0.m_col + v1.m_col) /2, v0.m_row + height))
 {
 	if (!isTriangleValid()) //if triangle isnt valid assign default values
 	{
@@ -57,9 +57,7 @@ double Triangle::getLength() const
 // this function returns the height of triangle
 double Triangle::getHeight() const // tosdo
 {
-	double height = m_v2.m_row - m_v0.m_row;
-
-	return (height > 0 ? height : - height);
+	return  m_v2.m_row - m_v0.m_row;
 }
 
 //-----------------------------------------------------------------------------
@@ -67,21 +65,21 @@ double Triangle::getHeight() const // tosdo
 void Triangle::draw(Board& board) const
 {
 	board.drawLine(m_v0, m_v1);
-	board.drawLine(m_v0, m_v2);
 	board.drawLine(m_v1, m_v2);
+	board.drawLine(m_v2, m_v0);
 }
 
 //-----------------------------------------------------------------------------
 Rectangle Triangle::getBoundingRectangle() const
 {
 	
-	return Rectangle(m_v0, Vertex(m_v1.m_col, m_v2.m_row));
+	return Rectangle(m_v0, Vertex(m_v1.m_col, m_v2.m_row)); // todo
 }
 
 //-----------------------------------------------------------------------------
 double Triangle::getArea() const
 {
-	return ((getHeight() * getLength()) / 2);
+	return abs((getHeight() * getLength()) / 2);
 }
 
 //-----------------------------------------------------------------------------
@@ -93,7 +91,7 @@ double Triangle::getPerimeter() const
 //-----------------------------------------------------------------------------
 Vertex Triangle::getCenter() const
 {
-	return Vertex(m_v0.m_col + getLength()/2, m_v0.m_row + (getHeight()/3));
+	return Vertex(m_v2.m_col, m_v0.m_row + (getHeight() / 3));
 }
 
 //-----------------------------------------------------------------------------
@@ -102,9 +100,9 @@ bool Triangle::scale(double factor)
 	Vertex center = getCenter();
 
 	Vertex 
-		new_v0 = Vertex(center.m_col - (center.m_col - m_v0.m_col)*factor, center.m_row - (center.m_row - m_v0.m_row)*factor),
-		new_v1 = Vertex(center.m_col + (m_v1.m_col - center.m_col)*factor, center.m_row - (center.m_row - m_v1.m_row)*factor),
-		new_v2 = Vertex(center.m_col, center.m_row + distance(m_v2, center)*factor);
+		new_v0 = Vertex(center.m_col - (center.m_col - m_v0.m_col) * factor, center.m_row - (center.m_row - m_v0.m_row) * factor),
+		new_v1 = Vertex(center.m_col + (m_v1.m_col - center.m_col) * factor, center.m_row - (center.m_row - m_v1.m_row) * factor),//todo
+		new_v2 = Vertex(center.m_col, center.m_row + distance(m_v2, center) * factor);
 
 	if (factor < 0 || !new_v0.isValid() || !new_v1.isValid() || !new_v2.isValid())
 		return false;	

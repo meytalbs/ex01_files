@@ -22,7 +22,5 @@ public:
     bool scale(double factor);
 
 private:
-    Vertex m_bottomLeft;
-    Vertex m_topRight;
-    bool squareIsValid(const Vertex& v1, const Vertex& v2);
+    Rectangle m_square;
 };

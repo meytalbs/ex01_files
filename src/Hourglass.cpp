@@ -24,8 +24,8 @@ Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
 //-----------------------------------------------------------------------------
 //c-tor using 1 triangle and duplicating it upwards
 Hourglass::Hourglass(const Triangle& lower)
-	:Hourglass(Triangle(DEFAULT_UPPER_V0, DEFAULT_UPPER_V1, -(DEFAULT_UPPER_V0.m_row - DEFAULT_UPPER_V2.m_row)),
-				Triangle(DEFAULT_LOWER_V0, DEFAULT_LOWER_V1, DEFAULT_LOWER_V2.m_row - DEFAULT_LOWER_V0.m_row))
+	: Hourglass(Triangle(DEFAULT_UPPER_V0, DEFAULT_UPPER_V1, -(DEFAULT_UPPER_V0.m_row - DEFAULT_UPPER_V2.m_row)), 
+		lower)
 {
 	//y value of new vertexs
 	double new_vertex_y = lower.getVertex(0).m_row + lower.getHeight() * 2;
@@ -66,7 +66,9 @@ double Hourglass::getHeight() const
 //-----------------------------------------------------------------------------
 void Hourglass::draw(Board& board) const
 {
-	Vertex bottomLeft = m_lower.getVertex(0),
+	//m_lower.draw(board);
+	m_upper.draw(board);
+	/*Vertex bottomLeft = m_lower.getVertex(0),
 		bottomRight = m_lower.getVertex(1),
 		topLeft = m_upper.getVertex(0),
 		topRight = m_upper.getVertex(1);
@@ -76,6 +78,7 @@ void Hourglass::draw(Board& board) const
 	board.drawLine(bottomLeft, topRight);
 	board.drawLine(topLeft, topRight);
 	board.drawLine(topLeft, bottomRight);
+	*/
 }
 
 //-----------------------------------------------------------------------------
