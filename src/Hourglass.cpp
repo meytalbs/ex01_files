@@ -17,7 +17,7 @@ Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
 	if (!isHourglassValid(lower, upper))
 	{
 		m_lower = Triangle(DEFAULT_LOWER_V0, DEFAULT_LOWER_V1, DEFAULT_LOWER_V2.m_row - DEFAULT_LOWER_V0.m_row);
-		m_upper = Triangle(DEFAULT_UPPER_V0, DEFAULT_UPPER_V1, -(DEFAULT_UPPER_V2.m_row - DEFAULT_UPPER_V0.m_row));
+		m_upper = Triangle(DEFAULT_UPPER_V0, DEFAULT_UPPER_V1, -(DEFAULT_UPPER_V0.m_row - DEFAULT_UPPER_V2.m_row));
 	}
 }
 
@@ -25,7 +25,7 @@ Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
 //c-tor using 1 triangle and duplicating it upwards
 Hourglass::Hourglass(const Triangle& lower)
 	: Hourglass(Triangle(DEFAULT_UPPER_V0, DEFAULT_UPPER_V1, -(DEFAULT_UPPER_V0.m_row - DEFAULT_UPPER_V2.m_row)), 
-		lower)
+			Triangle(DEFAULT_LOWER_V0, DEFAULT_LOWER_V1, DEFAULT_LOWER_V2.m_row - DEFAULT_LOWER_V0.m_row))
 {
 	//y value of new vertexs
 	double new_vertex_y = lower.getVertex(0).m_row + lower.getHeight() * 2;
@@ -34,7 +34,8 @@ Hourglass::Hourglass(const Triangle& lower)
 	Vertex topLeft = Vertex(lower.getVertex(0).m_col, new_vertex_y),
 			topRight = Vertex(lower.getVertex(1).m_col, new_vertex_y);
 
-	Triangle temp_upper = Triangle(topLeft, topRight, lower.getHeight());
+	Triangle temp_upper = Triangle(topLeft, topRight, -lower.getHeight());
+
 	if (isHourglassValid(lower, temp_upper))//if isnt valid keeps default values
 	{
 		m_lower = lower;
@@ -66,19 +67,8 @@ double Hourglass::getHeight() const
 //-----------------------------------------------------------------------------
 void Hourglass::draw(Board& board) const
 {
-	//m_lower.draw(board);
+	m_lower.draw(board);
 	m_upper.draw(board);
-	/*Vertex bottomLeft = m_lower.getVertex(0),
-		bottomRight = m_lower.getVertex(1),
-		topLeft = m_upper.getVertex(0),
-		topRight = m_upper.getVertex(1);
-
-	//draws from bottom left to top right creates 1 long line instead of drawing 2 triangles
-	board.drawLine(bottomLeft, bottomRight);
-	board.drawLine(bottomLeft, topRight);
-	board.drawLine(topLeft, topRight);
-	board.drawLine(topLeft, bottomRight);
-	*/
 }
 
 //-----------------------------------------------------------------------------
