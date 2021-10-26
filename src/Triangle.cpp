@@ -100,13 +100,13 @@ Vertex Triangle::getCenter() const
 bool Triangle::scale(double factor)
 {
 	Vertex center = getCenter();
-	double length_x = (center.m_col - m_v0.m_col) * factor,
-		length_y = (center.m_row - m_v0.m_row) * factor;
+	double lengthX = (center.m_col - m_v0.m_col) * factor,
+		lengthY = (center.m_row - m_v0.m_row) * factor;
 
 	Vertex 
-		newV0 = Vertex(center.m_col - length_x, center.m_row - length_y),
-		newV1 = Vertex(center.m_col + length_x, center.m_row - length_y),
-		newV2 = Vertex(center.m_col, center.m_row + length_y);
+		newV0 = Vertex(center.m_col - lengthX, center.m_row - lengthY),
+		newV1 = Vertex(center.m_col + lengthX, center.m_row - lengthY),
+		newV2 = Vertex(center.m_col, center.m_row + lengthY);
 
 	if (factor < 0 || !newV0.isValid() || !newV1.isValid() || !newV2.isValid())
 		return false;	
