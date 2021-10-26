@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vertex.h"  // ask - where do we need to put the includes
+#include "Vertex.h"
 #include "Board.h"
 #include "Rectangle.h"
 
@@ -25,5 +25,5 @@ private:
 	Vertex m_v0;
 	Vertex m_v1;
 	Vertex m_v2;
-	bool isTriangleValid();											//checks if triangle is valid
+	bool isTriangleValid();										//checks if triangle is valid
 };
