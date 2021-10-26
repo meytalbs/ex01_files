@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Hourglass.h"
+#include "Utilities.h"
 
 const Vertex DEFAULT_LOWER_V0 = Vertex(20, 20),
 			DEFAULT_LOWER_V1 = Vertex(30, 20),
@@ -49,10 +50,10 @@ Hourglass::Hourglass(const Triangle& lower)
 
 bool Hourglass::isHourglassValid(Triangle lower, Triangle upper)
 {
-	return (lower.getLength() - upper.getLength() < 0.5
-			&& lower.getVertex(2).m_col - upper.getVertex(2).m_col < 0.5
-			&& lower.getVertex(2).m_row - upper.getVertex(2).m_row < 0.5
-			&& upper.getVertex(0).isHigherThan(lower.getVertex(0)));
+	return (doubleEqual(lower.getLength(), upper.getLength()) 
+		&& doubleEqual(lower.getVertex(2).m_col, upper.getVertex(2).m_col)
+		&& doubleEqual(lower.getVertex(2).m_row, upper.getVertex(2).m_row)		
+		&& upper.getVertex(0).isHigherThan(lower.getVertex(0)));
 }
 //-----------------------------------------------------------------------------
 
