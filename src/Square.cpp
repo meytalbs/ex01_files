@@ -1,4 +1,5 @@
 #include "Square.h"
+#include "Utilities.h"
 
 //default value to square
 const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20, 10),
@@ -8,10 +9,12 @@ const Vertex DEFAULT_BOTTOM_LEFT = Vertex(20, 10),
 //c-tor builds square using two vertexs
 Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
     :m_square(Rectangle(bottomLeft, topRight))
-{}
+{
+    if (!doubleEqual(m_square.getWidth(), m_square.getHeight()))
+        m_square = Rectangle(DEFAULT_BOTTOM_LEFT, DEFAULT_TOP_RIGHT);
+}
 //-----------------------------------------------------------------------------
 
-//todo validate length of square equale
 //uses 2 vertexs c-tor
 Square::Square(const Vertex& start, double length)
     : Square(start, Vertex(start.m_col + length, start.m_row + length))
