@@ -118,18 +118,18 @@ bool Rectangle::scale(double factor)
 	Vertex center = getCenter();
 
 	//new length from center to vertex
-	double length_x = (center.m_col - m_bottomLeft.m_col) * factor,
-	       length_y = (center.m_row - m_bottomLeft.m_row) * factor;
+	double lengthX = (center.m_col - m_bottomLeft.m_col) * factor,
+	       lengthY = (center.m_row - m_bottomLeft.m_row) * factor;
 
 	//new potenital vertexs (if they are valid)
-	Vertex new_bottomLeft = Vertex(center.m_col - length_x, center.m_row - length_y);
-	Vertex new_topRight = Vertex(center.m_col + length_x, center.m_row + length_y);
+	Vertex newBottomLeft = Vertex(center.m_col - lengthX, center.m_row - lengthY);
+	Vertex newTopRight = Vertex(center.m_col + lengthX, center.m_row + lengthY);
 
-	if (factor < 0 || !new_bottomLeft.isValid() || !new_topRight.isValid())
+	if (factor < 0 || !newBottomLeft.isValid() || !newTopRight.isValid())
 		return false;
 	
-	m_bottomLeft = new_bottomLeft;
-	m_topRight = new_topRight;
+	m_bottomLeft = newBottomLeft;
+	m_topRight = newTopRight;
 
 	return true;
 }

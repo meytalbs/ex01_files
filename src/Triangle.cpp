@@ -30,11 +30,11 @@ Triangle::Triangle(const Vertex vertices[3])
 
 bool Triangle::isTriangleValid()
 {
-	return (m_v0.isValid() && m_v1.isValid() && m_v2.isValid() 
-			&& m_v2.isToTheRightOf(m_v0) && m_v1.isToTheRightOf(m_v2)
-			&& !m_v0.isHigherThan(m_v1)
-			&& distance(m_v0, m_v2) - getLength() < 0.5
-		    && distance(m_v2, m_v1) - getLength() < 0.5);
+	return (m_v0.isValid() && m_v1.isValid() && m_v2.isValid()
+		&& m_v2.isToTheRightOf(m_v0) && m_v1.isToTheRightOf(m_v2)
+		&& !m_v0.isHigherThan(m_v1)
+		&& doubleEqual(distance(m_v0, m_v2), getLength())
+		&& doubleEqual(distance(m_v2, m_v1), getLength()));
 }
 //-----------------------------------------------------------------------------
 
@@ -74,7 +74,8 @@ void Triangle::draw(Board& board) const
 
 Rectangle Triangle::getBoundingRectangle() const
 {
-	return Rectangle(m_v0, Vertex(m_v1.m_col, m_v2.m_row)); // todo
+	return Rectangle(Vertex(m_v0.m_col, std::min(m_v0.m_row, m_v2.m_row)),
+					 Vertex(m_v1.m_col, std::max(m_v1.m_row, m_v2.m_row))); 
 }
 //-----------------------------------------------------------------------------
 
@@ -96,23 +97,23 @@ Vertex Triangle::getCenter() const
 }
 //-----------------------------------------------------------------------------
 
-bool Triangle::scale(double factor) // todo
+bool Triangle::scale(double factor)
 {
 	Vertex center = getCenter();
+	double length_x = (center.m_col - m_v0.m_col) * factor,
+		length_y = (center.m_row - m_v0.m_row) * factor;
 
 	Vertex 
-		new_v0 = Vertex(center.m_col - (center.m_col - m_v0.m_col) * factor, 
-						center.m_row - (center.m_row - m_v0.m_row) * factor),
-		new_v1 = Vertex(center.m_col + (m_v1.m_col - center.m_col) * factor, 
-						center.m_row - (center.m_row - m_v1.m_row) * factor), //todo
-		new_v2 = Vertex(center.m_col, center.m_row + distance(m_v2, center) * factor);
+		newV0 = Vertex(center.m_col - length_x, center.m_row - length_y),
+		newV1 = Vertex(center.m_col + length_x, center.m_row - length_y),
+		newV2 = Vertex(center.m_col, center.m_row + length_y);
 
-	if (factor < 0 || !new_v0.isValid() || !new_v1.isValid() || !new_v2.isValid())
+	if (factor < 0 || !newV0.isValid() || !newV1.isValid() || !newV2.isValid())
 		return false;	
 	
-	m_v0 = new_v0;
-	m_v1 = new_v1;
-	m_v2 = new_v2;
+	m_v0 = newV0;
+	m_v1 = newV1;
+	m_v2 = newV2;
 
 	return true;
 }
