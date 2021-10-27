@@ -2,13 +2,8 @@
 #include "Hourglass.h"
 #include "Utilities.h"
 
-const Vertex DEFAULT_LOWER_V0 = Vertex(20, 20),
-			DEFAULT_LOWER_V1 = Vertex(30, 20),
-			DEFAULT_LOWER_V2 = Vertex(25, 20 + sqrt(75)),
-			DEFAULT_UPPER_V0 = Vertex(25, 20 + sqrt(75)),
-			DEFAULT_UPPER_V1 = Vertex(20, 20 + 2 * sqrt(75)),
-			DEFAULT_UPPER_V2 = Vertex(30, 20 + 2 * sqrt(75));
-
+Triangle lowerDefault = Triangle(Vertex(20, 20), Vertex(30, 20), sqrt(75)),
+		upperDefault = Triangle(Vertex(20, 20 + 2 * sqrt(75)), Vertex(30, 20 + 2 * sqrt(75)), -sqrt(75));
 
 //c-tor using 2 triangles
 Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
@@ -16,20 +11,15 @@ Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
 {
 	if (!isHourglassValid(lower, upper))
 	{
-		m_lower = Triangle(DEFAULT_LOWER_V0, DEFAULT_LOWER_V1, 
-							DEFAULT_LOWER_V2.m_row - DEFAULT_LOWER_V0.m_row);
-		m_upper = Triangle(DEFAULT_UPPER_V0, DEFAULT_UPPER_V1, 
-							-(DEFAULT_UPPER_V0.m_row - DEFAULT_UPPER_V2.m_row));
+		m_lower = lowerDefault;
+		m_upper = upperDefault;
 	}
 }
 //-----------------------------------------------------------------------------
 
 //c-tor using 1 triangle and duplicating it upwards
 Hourglass::Hourglass(const Triangle& lower)
-	: Hourglass(Triangle(DEFAULT_UPPER_V0, DEFAULT_UPPER_V1, 
-						-(DEFAULT_UPPER_V0.m_row - DEFAULT_UPPER_V2.m_row)), 
-			    Triangle(DEFAULT_LOWER_V0, DEFAULT_LOWER_V1, 
-						DEFAULT_LOWER_V2.m_row - DEFAULT_LOWER_V0.m_row))
+	: Hourglass(upperDefault, lowerDefault)
 {
 	//y value of new vertexs
 	double new_vertex_y = lower.getVertex(0).m_row + lower.getHeight() * 2;
@@ -38,12 +28,12 @@ Hourglass::Hourglass(const Triangle& lower)
 	Vertex topLeft = Vertex(lower.getVertex(0).m_col, new_vertex_y),
 			topRight = Vertex(lower.getVertex(1).m_col, new_vertex_y);
 
-	Triangle temp_upper = Triangle(topLeft, topRight, -lower.getHeight());
+	Triangle upper = Triangle(topLeft, topRight, -lower.getHeight());
 
-	if (isHourglassValid(lower, temp_upper))//if isnt valid keeps default values
+	if (isHourglassValid(lower, upper))//if isnt valid keeps default values
 	{
 		m_lower = lower;
-		m_upper = temp_upper;
+		m_upper = upper;
 	}
 }
 //-----------------------------------------------------------------------------
@@ -53,7 +43,8 @@ bool Hourglass::isHourglassValid(Triangle lower, Triangle upper)
 	return (doubleEqual(lower.getLength(), upper.getLength()) 
 		&& doubleEqual(lower.getVertex(2).m_col, upper.getVertex(2).m_col)
 		&& doubleEqual(lower.getVertex(2).m_row, upper.getVertex(2).m_row)		
-		&& upper.getVertex(0).isHigherThan(lower.getVertex(0)));
+		&& upper.getVertex(0).isHigherThan(lower.getVertex(0)))
+		&& lower.getVertex(2).isHigherThan(lower.getVertex(0));
 }
 //-----------------------------------------------------------------------------
 

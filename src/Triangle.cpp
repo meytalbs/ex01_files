@@ -93,7 +93,7 @@ double Triangle::getPerimeter() const
 
 Vertex Triangle::getCenter() const
 {
-	return Vertex(m_v2.m_col, m_v0.m_row + (getHeight() / 3));
+	return Vertex((m_v0.m_col + m_v1.m_col + m_v2.m_col) / 3, (m_v0.m_row + m_v1.m_row + m_v2.m_row) / 3);
 }
 //-----------------------------------------------------------------------------
 
