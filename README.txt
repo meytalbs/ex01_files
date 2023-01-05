@@ -1,6 +1,6 @@
 ex0: Shapes
-name: Tomer Akrish		id: 315224295		login: tomerak
-name: Meytal Ben Shimol		id: 211369939		login: meytalbs
+name: Tomer Akrish
+name: Meytal Ben Shimol	
 ===============================================================================
 This program can draw up to 4 shapes: Rectangle, Square, Triangle and Hourglass.
 first it will read vertexs from user for each of the shapes, if values arent 
